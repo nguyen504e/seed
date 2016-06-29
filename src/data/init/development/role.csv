@@ -1,0 +1,3 @@
+_id,description,active,permission
+ADMIN,Administrator,true,[1004]
+USER,Default role,true,[1004]

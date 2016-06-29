@@ -1,0 +1,18 @@
+$btn-facebook-bg: #3b5998 !default;
+$btn-facebook-border: #172d5e !default;
+
+$btn-google-plus-bg: #c32f10 !default;
+$btn-google-plus-border: #6b1301 !default;
+
+$btn-twitter-bg: #00aced !default;
+$btn-twitter-border: #043d52 !default;
+
+.btn-facebook {
+    @include button-variant($btn-social-color, $btn-facebook-bg, $btn-facebook-border)
+}
+.btn-twitter {
+    @include button-variant($btn-social-color, $btn-twitter-bg, $btn-twitter-border)
+}
+.btn-google-plus {
+    @include button-variant($btn-social-color, $btn-google-plus-bg, $btn-google-plus-border)
+}

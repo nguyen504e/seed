@@ -1,0 +1,3 @@
+provider,role,name,email,password
+local,USER,Test User,test@test.com,test
+local,ADMIN,Admin,admin@admin.com,admin

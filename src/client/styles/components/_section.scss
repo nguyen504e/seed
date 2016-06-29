@@ -1,0 +1,43 @@
+.text-inverse {
+	color: white;
+}
+.section {
+	position: relative;
+	.background-image {
+		z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+		&.background-image-fixed {
+			background-attachment: fixed;
+		}
+	}
+	.background-video-holder {
+		overflow: hidden;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		.background-video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+	&.section-opaque-dark {
+		background-color: rgba(0, 0, 0, 0.7);
+	}
+	&.section-opaque-light {
+		background-color: rgba(255, 255, 255, 0.7);
+	}
+}
+.section-fill-height {
+	display: flex;
+	height: 100vh;
+	align-items: center;
+}

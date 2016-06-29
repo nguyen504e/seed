@@ -1,0 +1,16 @@
+{
+  "ecmaVersion": 6,
+  "loadEagerly": [
+    "**/*.js"
+  ],
+  "dontLoad": [
+    "client"
+  ],
+  "plugins": {
+    "node": {},
+    "es_modules": {},
+    "doc_comment": {
+      "fullDocs": true
+    }
+  }
+}
