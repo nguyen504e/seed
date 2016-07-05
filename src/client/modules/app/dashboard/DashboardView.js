@@ -1,8 +1,11 @@
-import { default as CommonView, Template } from '../../../common/CommonView'
+import { default as CommonView, RactiveTemplate } from '../../../common/CommonView'
 import DashboardTemplate from './DashboardView.html'
 
-@Template(DashboardTemplate)
+@RactiveTemplate(DashboardTemplate)
 class DashboardView extends CommonView {
+  constructor() {
+    super(arguments)
+  }
 }
 
 export default DashboardView

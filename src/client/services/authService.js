@@ -1,19 +1,16 @@
+import CommonModel from '../common/CommonModel';
+
 import historyService from './historyService'
 import Config from '../config'
-import { CommonModel } from '../lib/common'
 
 class AuthService extends CommonModel {
-  get restUrlRoot() {
-    return '/api/user/me'
+  getUrl(postFix) {
+    return '/api/auth/' + postFix
   }
 
   initialize() {
     this._storage = Config.webStorage === 'local' ? localStorage : sessionStorage
-    const auth = this._storage.getItem('auth')
-
-    if (auth) {
-      this.set(JSON.parse(auth), {silent: true})
-    }
+    this.set(this.getAuth(), {silent: true})
   }
 
   isLogin() {}
@@ -40,9 +37,28 @@ class AuthService extends CommonModel {
     }
   }
 
-  getAuthInfo() {
-    return this.fetch()
+  getAuth() {
+    try {
+      return JSON.parse(this._storage.getItem('auth') || '{}')
+    } catch (e) {
+      this._storage.removeItem('auth')
+      return {}
+    }
+  }
+
+  setAuth(data) {
+    this._storage.setItem('auth', data)
+  }
+
+  login(data) {
+    return this.save(data, {url: this.getUrl('local')})
+  }
+
+  parse(res) {
+    const data = Object.assign(this.getAuth(), res)
+    this.setAuth(JSON.stringify(data))
+    return res
   }
 }
 
-export default AuthService
+export default new AuthService()

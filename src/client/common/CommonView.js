@@ -1,5 +1,5 @@
 import { View } from 'backbone.marionette'
-import { isObject, isFunction, result, each, bind } from 'lodash'
+import { isObject, isFunction, result, each } from 'lodash'
 
 import Ractive from './lib/ractive';
 import { SetHash, SetProp } from './lib/decorators'
@@ -7,32 +7,41 @@ import { SetHash, SetProp } from './lib/decorators'
 class CommonView extends View {
   constructor() {
     super(...arguments)
+    this._ractiveHandleModelChange = (model, options) => {
+      if (options.ractiveSilent) {
+        return
+      }
+      return this.$tmpl.set(model.changed)
+    }
   }
 
   _renderTemplate() {
-    const template = this.getOption('template')
+    if (this.ractiveTemplate) {
+      const template = this.getOption('ractiveTemplate')
+      if (!isFunction(template) && isObject(template)) {
+        let $tmpl = this.$tmpl
+        $tmpl && $tmpl.teardown()
 
-    if (!isFunction(template) && isObject(template)) {
-      let $tmpl = this.$tmpl
-      $tmpl && $tmpl.teardown()
+        template.data = this.mixinTemplateContext(this.serializeData())
+        template.el   = this.el
 
-      function handleModelChange(model) {
-        return $tmpl.set(model.changed)
+        $tmpl = new Ractive(template)
+
+        if (template.subscribeModel && this.model) {
+          const model = this.model
+          if (!template.lazy) {
+            $tmpl.on('change', changed => {
+              this.model.set(changed, {ractiveSilent: true})
+            })
+          }
+
+          model.off('change', this._ractiveHandleModelChange)
+          model.on('change', this._ractiveHandleModelChange)
+        }
+
+        this.$tmpl = $tmpl
+        return this.delegateRactiveEvents()
       }
-
-      if (this.subscribeModel) {
-        this.model.off('change', handleModelChange)
-        this.model.on('change', handleModelChange)
-      }
-
-      $tmpl = new Ractive({
-        el:   this.el,
-        data: this.mixinTemplateContext(this.serializeData()),
-              template
-      })
-
-      this.delegateRactiveEvents()
-      return this.$tmpl = $tmpl
     }
 
     return View.prototype._renderTemplate(arguments)
@@ -56,7 +65,7 @@ class CommonView extends View {
       if (!isFunction(method)) {
         method = this[method]
       }
-      return method && $tmpl.on(key, bind(method, this))
+      return method && $tmpl.on(key, method.bind(this))
     })
 
   }
@@ -104,6 +113,38 @@ export function RadioRequests(eventName) {
 
 export function Template(template) {
   return SetProp('template', template, true)
+}
+
+export function ModelClass(Model) {
+  return SetProp('model', new Model(), true)
+}
+
+export function RactiveTemplate(template) {
+  if (isObject(template)) {
+    if (template.template) {
+      template = Object.assign({
+        lazy:           true,
+        subscribeModel: false
+      }, template)
+    } else {
+      template = {lazy: true, subscribeModel: false, template}
+    }
+  } else {
+    return new Error('Decorator do not accept this type of template')
+  }
+  return SetProp('ractiveTemplate', template, true)
+}
+
+export function TagName(value) {
+  return SetProp('tagName', value, true)
+}
+
+export function Id(value) {
+  return SetProp('id', value, true)
+}
+
+export function ClassName(value) {
+  return SetProp('className', value, true)
 }
 
 export function Regions(value) {
