@@ -92,9 +92,9 @@ class Auth {
    * @method signToken
    * @param  {String}  id token id
    */
-  signToken(id) {
-    return jwt.sign({_id: id}, secrets.session, {
-      expiresInMinutes
+  signToken(_id) {
+    return jwt.sign({_id}, secrets.session, {
+      expiresIn: expiresInMinutes + 'm'
     })
   }
 
@@ -110,7 +110,7 @@ class Auth {
         message: 'Something went wrong, please try again.'
       })
     }
-    const token = this.signToken(req.user._id, req.user.role)
+    const token = this.signToken(req.user._id)
     res.cookie('token', JSON.stringify(token))
     return res.redirect('/')
   }

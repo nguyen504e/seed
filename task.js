@@ -268,7 +268,7 @@ class Task {
     watcher.on('all', (even, _pth) => {
       this.logger.info('tranform file %s', _pth)
       this.tranform(_pth)
-      startTime = (new Date()).getTime() + 1000
+      startTime = (new Date()).getTime() + 3000
       return runFile()
     })
   }

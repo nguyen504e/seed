@@ -1,0 +1,10 @@
+@import '../../../styles/Original/variables';
+@import '../../../styles/Original/mixins';
+
+#page-auth {
+  background-image: url("/modules/auth/assets/background.jpg");
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+}

@@ -1,13 +1,17 @@
-import AppPageTemplate from './AppPage.html'
-import { default as CommonView, Template, Regions } from '../../common/CommonView'
+import NavbarView from './navbar/NavbarView';
 
-@Template(AppPageTemplate)
+import AppPageTemplate from './AppPage.html'
+import { default as CommonView, RactiveTemplate, Regions } from '../../common/CommonView'
+
+@RactiveTemplate(AppPageTemplate)
 @Regions({content: '#content', header: '#header', footer: '#footer'})
 class AppPage extends CommonView {
 
   initialize() {}
 
-  onShow() {}
+  onAttach() {
+    this.showChildView('header', new NavbarView())
+  }
 }
 
 export default AppPage

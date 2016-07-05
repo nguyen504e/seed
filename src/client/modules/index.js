@@ -1,10 +1,15 @@
 import ErrorPage from './error/ErrorPage';
+import auth from './auth';
 
 import app from './app'
 import { default as CommonLoader, Route } from '../common/CommonLoader';
-import { AppChannel } from '../services/radioService';
+import { AppChannel, GlobalChannel } from '../services/radioService';
 
 class ModulesLoader extends CommonLoader {
+
+  initialize() {
+    GlobalChannel.reply('nav:home', () => this.redirect('/app'))
+  }
 
   @Route('/')
   routerRoot() {
@@ -17,7 +22,7 @@ class ModulesLoader extends CommonLoader {
       }
     }
 
-    return this.redirect('/app/dashboard')
+    return this.redirect('/app')
   }
 
   @Route('/notfound')
@@ -32,4 +37,4 @@ class ModulesLoader extends CommonLoader {
 
 }
 
-export default [app, ModulesLoader]
+export default [app, auth, ModulesLoader]

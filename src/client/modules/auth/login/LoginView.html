@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+    <card class="card">
+      <div class="card-block p-b-0">
+        <h3>Login to our site</h3>
+        <p>Enter username and password to log on</p>
+      </div>
+      <div class="card-block">
+        <form role="form" action="" method="post">
+          <div class="form-group">
+            <label class="sr-only">Username</label>
+            <input type="text" name="email" placeholder="Username" class="form-control" value="{{email}}">
+          </div>
+          <div class="form-group">
+            <label class="sr-only">Password</label>
+            <input type="password" name="password" placeholder="Password" class="form-control" value="{{password}}">
+          </div>
+          <button type="button" on-click="onLogin" class="btn btn-info btn-block">Sign in!</button>
+        </form>
+      </div>
+    </card>
+  </div>
+</div>
+
+<section>
+  <h5 class="text-xs-center p-t-1 text-inverse text-condensed">...or login with:</h5>
+  <div class="social-login-buttons">
+    <a class="btn btn-facebook" href="#">
+      <i class="fa fa-facebook"></i> Facebook
+    </a>
+    <a class="btn btn-twitter" href="#">
+      <i class="fa fa-twitter"></i> Twitter
+    </a>
+    <a class="btn btn-google-plus" href="#">
+      <i class="fa fa-google-plus"></i> Google Plus
+    </a>
+  </div>
+</section>

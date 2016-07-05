@@ -1,10 +1,15 @@
 import page from 'page';
-import { flatten, bind, uniqueId, compact } from 'lodash'
+import { isFunction, flatten, bind, uniqueId, compact } from 'lodash'
+import { SetProp } from './lib/decorators'
 
 const stylesIdx = []
 
 class CommonLoader {
   constructor(root) {
+    if (isFunction(this.initialize)) {
+      this.initialize()
+    }
+
     this.root = root
     this.id   = uniqueId()
     this._bind()
@@ -36,6 +41,10 @@ class CommonLoader {
 
   redirect(ctx) {
     return page.redirect(ctx)
+  }
+
+  navigate(_path) {
+    return page.redirect((this.root || '') + _path)
   }
 
   stop() {
@@ -114,6 +123,15 @@ class CommonLoader {
 }
 
 export default CommonLoader
+
+export function Base(base) {
+  return SetProp('base', base, true)
+}
+
+export function Children(children) {
+  children = Array.isArray(children) ? children : Array.from(arguments)
+  return SetProp('children', children, true)
+}
 
 export function Route(endpoint, method, before, after) {
   return function(target, name) {

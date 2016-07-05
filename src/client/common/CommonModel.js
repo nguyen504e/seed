@@ -1,7 +1,7 @@
+import config from '../config';
+
 import { Model } from 'backbone'
 import { result } from 'lodash'
-
-import config from '../../config'
 
 class CommonModel extends Model {
   urlRoot() {

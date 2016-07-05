@@ -1,6 +1,7 @@
 import jquery from 'jquery';
 import Backbone from 'backbone'
 import { isObject, forEach, isUndefined, isNull, unset } from 'lodash'
+import { AuthChannel } from '../../services/radioService'
 
 Backbone.$ = jquery
 
@@ -46,6 +47,11 @@ Backbone.ajax = function(options) {
       if (200 <= response.status && response.status < 300) {
         return response
       }
+
+      if (401 == response.status) {
+        return AuthChannel.request('login')
+      }
+
       const error = new Error(response.statusText)
       error.response = response
       throw error
