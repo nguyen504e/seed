@@ -1,0 +1,43 @@
+@import '../../../../styles/Original/variables';
+@import '../../../../styles/Original/mixins';
+@import "~bootstrap/scss/_navbar.scss";
+
+#page-navbar {
+  transition: all .3s;
+}
+
+#login-view {
+  @include media-breakpoint-up(md) {
+    max-width: 38em;
+  }
+}
+#page-navbar {
+  &.navbar-page {
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+    @extend .navbar-light;
+    &.transparent {
+      padding-top: $navbar-padding-vertical * 2;
+      padding-bottom: $navbar-padding-vertical * 2;
+      background: transparent;
+      box-shadow: none;
+      @extend .navbar-dark;
+      .btn-primary {
+        background-color:  rgba($btn-primary-bg, 0.3);
+        border-color: rgba($btn-primary-bg, 0.3);
+        &:hover {
+          background-color:  rgba($btn-primary-bg, 0.5);
+          border-color: rgba($btn-primary-bg, 0.5);
+        }
+      }
+      .form-control {
+        background-color: rgba($input-bg, 0.3);
+        border-color: rgba($input-border-color, 0.3);
+        color: white;
+        &:focus {
+          background-color: rgba($input-bg, 0.5);
+          border-color: rgba($input-border-color, 0.5);
+        }
+      }
+    }
+  }
+}

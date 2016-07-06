@@ -1,3 +1,5 @@
+import { Status } from '../constants';
+
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import connectRedis from 'connect-redis'
@@ -85,7 +87,7 @@ class Server {
     this.app.use('/api', ApiController)
 
     // Static file serve
-    this.app.use('/', (req, res, next) => {
+    this.app.get('/', (req, res, next) => {
       const originalUrl = req.session.originalUrl
 
       if (!originalUrl) {
@@ -102,19 +104,20 @@ class Server {
     this.app.use(serveStatic(this.staticPath))
 
     this.app.use((req, res) => {
+      if (req.method === 'GET') {
+        let originalUrl = req.originalUrl
+        const paramIdx  = originalUrl.indexOf('?')
+        if (paramIdx >= 0) {
+          originalUrl = originalUrl.substr(0, paramIdx)
+        }
 
-      let originalUrl = req.originalUrl
-      const paramIdx  = originalUrl.indexOf('?')
-      if (paramIdx >= 0) {
-        originalUrl = originalUrl.substr(0, paramIdx)
+        if (!/\.(\w+)$/.test(originalUrl)) {
+          req.session.originalUrl = new Buffer(originalUrl).toString('base64')
+          return res.redirect('/')
+        }
       }
 
-      if (/\.(\w+)$/.test(originalUrl)) {
-        return res.status(404).send('Not Found')
-      }
-
-      req.session.originalUrl = new Buffer(originalUrl).toString('base64')
-      res.redirect('/')
+      return res.sendStatus(Status.NOT_FOUND)
     })
   }
 }

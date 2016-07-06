@@ -22,7 +22,7 @@ const checkUser = function(email, password, done) {
     }, done)
 }
 
-export default passport.use(new LocalStrategy({
+passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password' // this is the virtual field on the model
 }, checkUser))

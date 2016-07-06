@@ -84,7 +84,7 @@ const config = {
       },
       {
         test:   /\.(woff|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=assets/fonts/[name].[ext]'
+        loader: 'file-loader'
       }
     ]
   },
@@ -99,8 +99,8 @@ const config = {
       name:      'vendor',
       minChunks: Infinity
     }),
-    new WebpackCopyPlugin([{context: 'src/client',from:    '**/*.{jpg,png}',to:      outputPath}])
-  // new WebpackBrowserPlugin({browser: 'Chrome', port: 3000}),
+    new WebpackCopyPlugin([{context: 'src/client',from:    '**/*.{jpg,png}',to:      outputPath}]),
+    new WebpackCopyPlugin([{context: 'src/client',from:    '**/*.{woff,ttf}',to:      outputPath}])
   ]
 }
 

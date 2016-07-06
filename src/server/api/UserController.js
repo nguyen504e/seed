@@ -1,3 +1,5 @@
+import Status from '../../constants/status';
+
 import jwt from 'jsonwebtoken'
 
 import { Methods } from '../../constants'
@@ -37,7 +39,7 @@ class UserController extends CommonController {
   @Controller('/:id', Methods.DELETE, [Auth.hasPermission('admin')])
   destroy(req, res) {
     return UserModel.findByIdAndRemove(req.params.id)
-      .then(() => this._noContent(res))
+      .then(() => res.sendStatus(Status.NO_CONTENT))
       .catch(err => this._serverError(res, err))
   }
 
@@ -65,11 +67,11 @@ class UserController extends CommonController {
           user.password = newPass
 
           return user.save()
-            .then(() => this._ok(res))
+            .then(() => res.sendStatus(Status.OK))
             .catch(err => this._unprocessableEntity(res, err))
         }
 
-        this._forbidden(res)
+        return res.sendStatus(Status)
       })
       .catch(err => this._serverError(res, err))
   }
@@ -99,7 +101,7 @@ class UserController extends CommonController {
           expiresInMinutes
         })
 
-        res.json({token})
+        return this._ok({token})
       })
       .catch(err => this._serverError(res, err))
   }
@@ -108,9 +110,9 @@ class UserController extends CommonController {
     return promise
       .then(user => {
         if (user) {
-          return res.json(user.profile)
+          return res.send(user.profile)
         }
-        return this._unauthorized(res)
+        return res.status(Status.UNAUTHORIZED)
       })
       .catch(err => this._serverError(res, err))
   }

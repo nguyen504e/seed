@@ -18,8 +18,17 @@ class Application extends CommonApplication {
   }
 
   @RadioRequests('show:page')
-  onShowPage(PageView, next) {
-    this._showPage(PageView)
+  onShowPage(PageView, forceReload, next) {
+    if (PageView) {
+      if (isFunction(PageView)) {
+        PageView = new PageView()
+      }
+
+      if (forceReload !== false || !this.page || this.page.constructor !== PageView.constructor) {
+        this.showView(this.page = PageView)
+      }
+    }
+
     if (next) {
       return next()
     }
@@ -31,18 +40,9 @@ class Application extends CommonApplication {
       if (isFunction(view)) {
         view = new view()
       }
+
       return this.page.showChildView('content', view)
     }
-  }
-
-  _showPage(PageView) {
-    if (!PageView) {
-      return
-    }
-    if (isFunction(PageView)) {
-      PageView = new PageView()
-    }
-    return this.showView(this.page = PageView)
   }
 }
 

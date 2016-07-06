@@ -62,7 +62,7 @@ class Auth {
           return next()
         }
 
-        return res.send(Status.UNAUTHORIZED)
+        return res.sendStatus(Status.UNAUTHORIZED)
       }, next)
   }
 
@@ -79,7 +79,7 @@ class Auth {
       if (permissionCode && req.user.role.permissions.indexOf(permissionCode)) {
         return next()
       }
-      res.send(Status.FORBIDDEN)
+      res.sendStatus(Status.FORBIDDEN)
     }
 
     return compose()
@@ -92,9 +92,9 @@ class Auth {
    * @method signToken
    * @param  {String}  id token id
    */
-  signToken(id) {
-    return jwt.sign({_id: id}, secrets.session, {
-      expiresInMinutes
+  signToken(_id) {
+    return jwt.sign({_id}, secrets.session, {
+      expiresIn: expiresInMinutes + 'm'
     })
   }
 
@@ -106,11 +106,11 @@ class Auth {
    */
   setTokenCookie(req, res) {
     if (!req.user) {
-      return res.json(Status.NOT_FOUND, {
+      return res.status(Status.NOT_FOUND).send({
         message: 'Something went wrong, please try again.'
       })
     }
-    const token = this.signToken(req.user._id, req.user.role)
+    const token = this.signToken(req.user._id)
     res.cookie('token', JSON.stringify(token))
     return res.redirect('/')
   }

@@ -9,10 +9,8 @@ export function SetHash(type, propertiesName, next) {
       throw new Error('The decorator is not compatible with an properties method')
       return
     }
-    if (!propertiesName && propertiesName !== '') {
-      throw new Error('The decorator requires an propertiesName argument')
-    }
-    target[type][propertiesName] = name
+
+    target[type][propertiesName || name] = name
 
     if (next) {
       next(target, name)
