@@ -1,0 +1,63 @@
+@import '../../../styles/Original/variables';
+@import '../../../styles/Original/mixins';
+@import "~bootstrap/scss/_navbar.scss";
+#page-navbar {
+  transition: all 0.3s;
+}
+#page-navbar {
+  &.navbar-light {
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+    &.transparent {
+      .navbar-brand {
+        color: $navbar-dark-active-color;
+        @include hover-focus {
+          color: $navbar-dark-active-color;
+        }
+      }
+      .navbar-nav {
+        .nav-link {
+          color: $navbar-dark-color;
+          @include hover-focus {
+            color: $navbar-dark-hover-color;
+          }
+        }
+        .active > .nav-link,
+        .nav-link.active,
+        .nav-link.open,
+        .open > .nav-link {
+          @include plain-hover-focus {
+            color: $navbar-dark-active-color;
+          }
+        }
+      }
+      padding-top: $navbar-padding-vertical * 2;
+      padding-bottom: $navbar-padding-vertical * 2;
+      background: transparent;
+      box-shadow: none;
+      .btn-primary {
+        background-color: rgba($btn-primary-bg, 0.3);
+        border-color: rgba($btn-primary-bg, 0.3);
+        &:hover {
+          background-color: rgba($btn-primary-bg, 0.5);
+          border-color: rgba($btn-primary-bg, 0.5);
+        }
+      }
+      .form-control {
+        background-color: rgba($input-bg, 0.3);
+        border-color: rgba($input-border-color, 0.3);
+        color: white;
+        &:focus {
+          background-color: rgba($input-bg, 0.5);
+          border-color: rgba($input-border-color, 0.5);
+        }
+      }
+    }
+  }
+}
+.nav-profile-pic {
+  $size: $line-height * $font-size-lg + 0.5rem;
+  height: $size;
+  width: $size;
+  border-radius: 0;
+  border: none;
+}

@@ -6,9 +6,13 @@ import { AppChannel } from '../../services/radioService';
 @Base('/app')
 @Children(DashboardLoader)
 class AppLoader extends CommonLoader {
+  load() {
+    return System.import('./module')
+  }
+
   @Route('*')
   routePage(ctx, next) {
-    AppChannel.request('show:page', AppPage, false, next)
+    return this.load().then(({View}) => AppChannel.request('show:page', View, false, next))
   }
 }
 
