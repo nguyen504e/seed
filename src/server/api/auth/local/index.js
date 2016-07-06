@@ -9,15 +9,15 @@ const controller = function(req, res) {
   const strategy = function(err, user, info) {
     const error = err || info
     if (error) {
-      return res.json(Status.NOT_ACCEPTABLE, error)
+      return res.status(Status.NOT_ACCEPTABLE).send(error)
     }
     if (!user) {
-      return res.json(Status.NOT_FOUND, {
+      return res.status(Status.NOT_FOUND).send({
         message: 'Something went wrong, please try again.'
       })
     }
 
-    return res.json(Status.OK, {
+    return res.status(Status.OK).send({
       token: Auth.signToken(user._id),
       _id:   user._id,
       role:  user.role

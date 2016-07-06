@@ -1,3 +1,5 @@
+import { Status } from '../constants';
+
 import bodyParser from 'body-parser'
 import compression from 'compression'
 import connectRedis from 'connect-redis'
@@ -115,7 +117,7 @@ class Server {
         }
       }
 
-      return res.status(404).send('Not Found')
+      return res.sendStatus(Status.NOT_FOUND)
     })
   }
 }

@@ -62,7 +62,7 @@ class Auth {
           return next()
         }
 
-        return res.send(Status.UNAUTHORIZED)
+        return res.sendStatus(Status.UNAUTHORIZED)
       }, next)
   }
 
@@ -79,7 +79,7 @@ class Auth {
       if (permissionCode && req.user.role.permissions.indexOf(permissionCode)) {
         return next()
       }
-      res.send(Status.FORBIDDEN)
+      res.sendStatus(Status.FORBIDDEN)
     }
 
     return compose()
@@ -106,7 +106,7 @@ class Auth {
    */
   setTokenCookie(req, res) {
     if (!req.user) {
-      return res.json(Status.NOT_FOUND, {
+      return res.status(Status.NOT_FOUND).send({
         message: 'Something went wrong, please try again.'
       })
     }
