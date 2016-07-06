@@ -1,5 +1,5 @@
 import { View } from 'backbone.marionette'
-import { isObject, isFunction, result, each } from 'lodash'
+import { isObject, isFunction, result, forEach, isString } from 'lodash'
 
 import Ractive from './lib/ractive';
 import { SetHash, SetProp } from './lib/decorators'
@@ -24,8 +24,7 @@ class CommonView extends View {
 
         template.data = this.mixinTemplateContext(this.serializeData())
         template.el   = this.el
-
-        $tmpl = new Ractive(template)
+        $tmpl         = new Ractive(template)
 
         if (template.subscribeModel && this.model) {
           const model = this.model
@@ -47,6 +46,50 @@ class CommonView extends View {
     return View.prototype._renderTemplate(arguments)
   }
 
+  delegateRactiveObservers(observers) {
+    const $tmpl = this.$tmpl
+    if (!$tmpl) {
+      return
+    }
+
+    observers || (observers = result(this, 'observers'))
+
+    if (!observers) {
+      return this
+    }
+
+    this.$observers = this.$observers || {}
+
+    this.undelegateRactiveObservers()
+
+    forEach(observers, (method, name) => {
+      if (!isFunction(method)) {
+        method = this[method]
+      }
+      return method && $tmpl.observe(name, method.bind(this))
+    })
+  }
+
+  undelegateRactiveObservers(observers) {
+
+    let $observers = observers
+
+    if (observers) {
+      if (isString(observers)) {
+        $observers            = {}
+        $observers[observers] = (this.$observers || {})[observers]
+      }
+    } else {
+      $observers = this.$observers
+    }
+
+    if (!$observers) {
+      return
+    }
+
+    return forEach($observers, ob => ob.cancel())
+  }
+
   delegateRactiveEvents(events) {
     const $tmpl = this.$tmpl
 
@@ -61,7 +104,7 @@ class CommonView extends View {
 
     this.undelegateRactiveEvents()
 
-    each(events, (method, key) => {
+    forEach(events, (method, key) => {
       if (!isFunction(method)) {
         method = this[method]
       }
@@ -81,7 +124,7 @@ class CommonView extends View {
     }
 
     events || (events = result(this, 'ractiveEvents'))
-    return each(events, selector => $tmpl.off(selector))
+    return forEach(events, selector => $tmpl.off(selector))
   }
 }
 
@@ -97,6 +140,10 @@ function _setRadio(type, propertiesName) {
 
 export function On(eventName) {
   return SetHash('ractiveEvents', eventName)
+}
+
+export function Observe(_path) {
+  return SetHash('observe', _path)
 }
 
 export function Events(eventName) {
