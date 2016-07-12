@@ -10,10 +10,10 @@ class AuthService extends CommonModel {
 
   initialize() {
     this._storage = Config.webStorage === 'local' ? localStorage : sessionStorage
-    this.set(this.getAuth(), {silent: true})
+    this.set(this.parse(this.getAuth()))
   }
 
-  isLogin() {}
+  // isLogin() {}
 
   // hasPermission(permissionRequired) {}
 
@@ -51,12 +51,13 @@ class AuthService extends CommonModel {
   }
 
   login(data) {
-    return this.save(data, {url: this.getUrl('local')})
+    return this.save(data, {url: this.getUrl('local')}).then(res => {
+      this.setAuth(JSON.stringify(res))
+    })
   }
 
   parse(res) {
-    const data = Object.assign(this.getAuth(), res)
-    this.setAuth(JSON.stringify(data))
+    res.isLogin = !!res.token
     return res
   }
 }

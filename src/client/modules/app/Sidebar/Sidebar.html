@@ -1,0 +1,42 @@
+<!-- Overlay for fixed sidebar -->
+<div class="overlay {{#isShow}} active {{/}}" on-click="onToggleSidebar"></div>
+
+<!-- Material sidebar -->
+<div class="panel panel-default right {{#isShow}}active{{/}} {{#transition}}transition{{/}}"
+  on-pan="onSlide"
+  on-panend="onSlideCancel"
+  on-pancancel="onSlideCancel"
+  data-pan-direction="right"
+  style="transform: translate3d({{slideNum}}px,0,0);"
+  >
+  <div class="close">
+    X
+  </div>
+  <div class="list-group">
+    {{#if isLogin}}
+    <div class="list-group-item">
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="profile-pic text-center" src="{{img}}" alt="" />
+        </div>
+        <div class="col-lg-8">
+          <p class="text-left m-b-0">
+            <strong>Nombre Apellido</strong>
+          </p>
+          <p class="text-left small">correoElectronico@email.com</p>
+          <p class="text-left">
+            <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    <a class="list-group-item">Features</a>
+    <a class="list-group-item">Pricing</a>
+    <a class="list-group-item">About</a>
+    {{#unless isLogin}}
+    <a class="list-group-item" href="/auth/login">Log in</a>
+    <a class="list-group-item">Sign in</a>
+    {{/unless}}
+  </div>
+</div>

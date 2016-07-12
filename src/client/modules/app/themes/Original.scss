@@ -1,10 +1,33 @@
 @import '../../../styles/Original/variables';
 @import '../../../styles/Original/mixins';
-@import "~bootstrap/scss/_navbar.scss";
+
+.profile-pic {
+  background-size: cover;
+  border-radius: 5%
+}
+
 #page-navbar {
   transition: all 0.3s;
-}
-#page-navbar {
+  .profile-pic {
+    $size: $line-height * $font-size-lg + 0.5rem;
+    height: $size;
+    width: $size;
+    border: none;
+  }
+  @mixin transparent($color) {
+    background-color: rgba($color, 0.3);
+    border-color: rgba($color, 0.3);
+    &:hover {
+      background-color: rgba($color, 0.5);
+      border-color: rgba($color, 0.5);
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .nav-search {
+      width: 10rem;
+    }
+  };
   &.navbar-light {
     box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
     &.transparent {
@@ -35,29 +58,56 @@
       background: transparent;
       box-shadow: none;
       .btn-primary {
-        background-color: rgba($btn-primary-bg, 0.3);
-        border-color: rgba($btn-primary-bg, 0.3);
+        @include transparent($btn-primary-bg);
+      }
+      .btn-secondary {
+        @include transparent($btn-secondary-bg);
+        color: rgba($btn-secondary-bg, 0.3);
         &:hover {
-          background-color: rgba($btn-primary-bg, 0.5);
-          border-color: rgba($btn-primary-bg, 0.5);
+          color: rgba($btn-secondary-bg, 0.5);
         }
       }
       .form-control {
-        background-color: rgba($input-bg, 0.3);
-        border-color: rgba($input-border-color, 0.3);
+        @include transparent($input-bg);
         color: white;
-        &:focus {
-          background-color: rgba($input-bg, 0.5);
-          border-color: rgba($input-border-color, 0.5);
-        }
       }
     }
   }
 }
-.nav-profile-pic {
-  $size: $line-height * $font-size-lg + 0.5rem;
-  height: $size;
-  width: $size;
-  border-radius: 0;
-  border: none;
+
+#sidebar {
+  @mixin sidebar-size($sidebar-width) {
+    width: $sidebar-width;
+  }
+
+  .profile-pic {
+    $size: 5.6rem;
+    height: $size;
+    width: $size;
+  }
+
+  .panel {
+    top: 0;
+    height: 100vh;
+    z-index: 1034;
+    background: $body-bg;
+    position: fixed;
+    @include box-shadow(0 5px 15px rgba(0,0,0,.5));
+    @include sidebar-size(24rem);
+    @include media-breakpoint-down(xs) {
+      @include sidebar-size(100vw);
+    }
+    &:not(.right) {
+      left: 0;
+    }
+    &.right {
+      right: 0;
+    }
+  }
+
+  .list-group-item {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
 }

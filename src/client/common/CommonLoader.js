@@ -25,18 +25,23 @@ class CommonLoader {
     this._load = this.load
     this.load  = () => {
       if (!this.module) {
-        this.module = this._load()
-        this.module.then(mdl => {
-          if (mdl && mdl.css) {
-            this._loadStyle(mdl.css)
-          }
+        this.module = new Promise((resolve, reject) => {
+          this._load().then(mdl => {
+            if (mdl && mdl.css) {
+              this._loadStyle(mdl.css)
+            }
 
+            resolve(mdl)
+          }, reject)
         })
+      //
+      //  this._load()
+      // this.module.
       }
       return this.module
     }
 
-    this.load()
+  // this.load()
   }
 
   redirect(ctx) {
@@ -107,6 +112,7 @@ class CommonLoader {
       style      = document.createElement('style')
       style.type = 'text/css'
       style.id   = prefix + this.id
+      console.log(style.id)
 
       const currentIdx = stylesIdx.indexOf(this.id)
       if (currentIdx === stylesIdx.length - 1) {
