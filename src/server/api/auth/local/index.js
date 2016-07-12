@@ -20,7 +20,8 @@ const controller = function(req, res) {
     return res.status(Status.OK).send({
       token: Auth.signToken(user._id),
       _id:   user._id,
-      role:  user.role
+      role:  user.role,
+      img:   user.img
     })
   }
 

@@ -1,3 +1,5 @@
+import connectHistoryApiFallback from 'connect-history-api-fallback';
+
 import { Status } from '../constants';
 
 import bodyParser from 'body-parser'
@@ -10,7 +12,6 @@ import express from 'express'
 import expressSession from 'express-session'
 import fs from 'fs';
 import log4js from 'log4js'
-import methodOverride from 'method-override'
 import passport from 'passport'
 import serveStatic from 'serve-static'
 import Mongoose from 'mongoose'
@@ -64,10 +65,6 @@ class Server {
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({extended: false}))
 
-    // To override the req.method property with a new value.
-    // This value will be pulled from the provided getter
-    this.app.use(methodOverride())
-
     // Parse Cookie header and populate req.cookies with an object keyed by the cookie names
     this.app.use(cookieParser())
 
@@ -100,6 +97,19 @@ class Server {
       const meta  = `<meta base-request="${originalUrl}">`
       return res.send(index.replace('<!-- [[base]] -->', meta))
     })
+
+    this.app.use(connectHistoryApiFallback({
+      rewrites: [
+        {
+          from: /\/.*?\/.*?\.js$/,
+          to:   function(context) {
+            const url = context.parsedUrl
+            const pth = url.pathname.substr(url.pathname.lastIndexOf('/') + 1)
+            return '/' + pth
+          }
+        }
+      ]
+    }))
 
     this.app.use(serveStatic(this.staticPath))
 

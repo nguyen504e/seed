@@ -1,5 +1,6 @@
-import { default as CommonView, RactiveTemplate } from '../../../common/CommonView';
+import { default as CommonView, RactiveTemplate, On } from '../../../common/CommonView';
 import authService from '../../../services/authService';
+import { AppChannel } from '../../../services/radioService';
 
 import NavbarViewTmpl from './NavbarView.html'
 
@@ -45,6 +46,12 @@ class NavbarView extends CommonView {
 
     onAttach() {
       this.classList = this.el.children[0].classList
+    }
+
+    @On()
+    onToggleSidebar() {
+      AppChannel.request('ui:sidebar:toggle')
+      return false
     }
   }
 

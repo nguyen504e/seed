@@ -20,6 +20,8 @@ class ApplicationLoader extends CommonLoader {
   }
 }
 
-new ApplicationLoader()
-const app = new Application()
-app.start()
+const appLoader = new ApplicationLoader()
+appLoader.load().then(() => {
+  const app = new Application()
+  app.start()
+})

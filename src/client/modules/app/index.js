@@ -1,4 +1,3 @@
-import AppPage from './AppPage'
 import DashboardLoader from './dashboard';
 import { default as CommonLoader, Route, Base, Children } from '../../common/CommonLoader'
 import { AppChannel } from '../../services/radioService';

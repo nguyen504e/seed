@@ -3,8 +3,6 @@ $fa-font-path: "~font-awesome/fonts";
 @import "./variables";
 @import "./mixins";
 @import "../include";
-
-
 $btn-social-color: #fff;
 $font-family-sans-serif: 'Roboto Light', sans-serif;
 $font-family-serif: Georgia, "Times New Roman", Times, serif;
@@ -70,19 +68,6 @@ $btn-twitter-border: #55acee;
   align-items: center;
 }
 
-
-// @font-face {
-//   font-family: 'Roboto Bold';
-//   font-style: normal;
-//   font-weight: 300;
-//   src: url('../../assets/fonts/Roboto/Roboto-Bold.woff2');
-// }
-// @font-face {
-//   font-family: 'Roboto Regular';
-//   font-style: normal;
-//   font-weight: 300;
-//   src: url('../../assets/fonts/Roboto/Roboto-Regular.woff2');
-// }
 @font-face {
   font-family: 'Roboto Light';
   font-style: normal;
@@ -95,20 +80,67 @@ $btn-twitter-border: #55acee;
   font-weight: 300;
   src: url('../../assets/fonts/Roboto_Condensed/RobotoCondensed-Light.woff2');
 }
-
 @font-face {
   font-family: 'Roboto Condensed Bold';
   font-style: normal;
   font-weight: 300;
   src: url('../../assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.woff2');
 }
-
-
-.text-condensed{
+.text-condensed {
   font-family: "Roboto Condensed Light", sans-serif;
 }
-
-
 body {
   font-family: $font-family-sans-serif;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1034;
+  width: 100vw;
+  height: 100vh;
+  &.active{
+    display: initial;
+  }
+}
+
+.transition {
+  transition: all 0.4s ease 0s;
+}
+
+.display-a-1 {
+  @extend .display-1;
+
+  @include media-breakpoint-down(lg) {
+    font-size: $display2-size;
+    font-weight: $display2-weight;
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: $display3-size - 0.25rem;
+    font-weight: $display3-weight;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: $display4-size - 0.5rem;
+    font-weight: $display4-weight;
+  }
+}
+
+.display-a-4 {
+  @extend .display-4;
+
+  @include media-breakpoint-down(md) {
+    font-size: $display3-size - 0.5rem;
+    font-weight: $display3-weight;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: $display4-size - 1rem;
+    font-weight: $display4-weight;
+  }
 }

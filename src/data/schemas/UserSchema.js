@@ -19,6 +19,7 @@ const UserSchema     = new mongoose.Schema({
   hashedPassword: String,
   provider:       String,
   salt:           String,
+  img:            String,
   facebook:       {},
   twitter:        {},
   google:         {},
