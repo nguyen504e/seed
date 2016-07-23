@@ -1,5 +1,5 @@
 import NavbarView from './navbar/NavbarView';
-import SidebarView from './Sidebar/SidebarView';
+import SidebarView from './sidebar/SidebarView';
 
 import AppPageTemplate from './AppPage.html'
 import { default as CommonView, RactiveTemplate, Regions } from '../../common/CommonView'

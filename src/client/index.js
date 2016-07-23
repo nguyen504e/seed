@@ -4,7 +4,10 @@
 (function() {
 
   function main() {
-    return System.import('./applicationLoader')
+    return System.import('./ApplicationLoader').then(module => {
+      const loader = new module.default()
+      loader.start()
+    })
   }
   if (window.WEBPACK_DEV_ENV) {
     return main()

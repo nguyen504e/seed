@@ -9,7 +9,7 @@ class AppLoader extends CommonLoader {
     return System.import('./module')
   }
 
-  @Route('*')
+  @Route('/*')
   routePage(ctx, next) {
     return this.load().then(({View}) => AppChannel.request('show:page', View, false, next))
   }
