@@ -15,6 +15,8 @@ class CommonLoader {
     this._bind()
     this._processLoader()
     this._processChildren()
+
+    return this
   }
 
   _processLoader() {
@@ -76,13 +78,14 @@ class CommonLoader {
     while (routes.length) {
       const route = routes.shift()
       const args  = compact(flatten([
-        root + route.endpoint,
+        root + (this.base || '') + route.endpoint,
         route.before,
         bind(this[route.name], this),
         route.after,
         afterRoutes[route.endpoint]
       ]))
 
+      console.log(args[0]);
       page(...args)
     }
   }

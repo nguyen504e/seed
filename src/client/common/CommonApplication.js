@@ -11,7 +11,7 @@ export default CommonApplication
 function _setRadio(type, propertiesName) {
   return SetHash(type, propertiesName, target => {
     if (!target.channelName) {
-      target.channelName = 'global'
+      target.channelName = 'app'
     }
   })
 }

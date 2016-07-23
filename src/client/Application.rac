@@ -1,0 +1,11 @@
+<div id="app-content"></div>
+<div id="app-modal" class="modal fade {{#modal.active}}in{{/}}" style=""></div>
+<div id="app-message" class="modal fade {{#message.active}}in{{/}}" style="{{#message.active}}display: block;{{/}}"></div>
+
+{{#modal.active}}
+<div id="app-modal-overlay" class="modal-backdrop fade in"></div>
+{{/}}
+
+{{#message.active}}
+<div id="app-message-overlay" class="modal-backdrop fade in"></div>
+{{/}}

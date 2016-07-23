@@ -1,8 +1,12 @@
+import Radio from 'backbone.radio';
+
 import { View } from 'backbone.marionette'
 import { isObject, isFunction, result, forEach, isString } from 'lodash'
 
 import Ractive from './lib/ractive';
 import { SetHash, SetProp } from './lib/decorators'
+
+Radio.DEBUG = true
 
 class CommonView extends View {
   constructor() {
@@ -130,14 +134,6 @@ class CommonView extends View {
 
 export default CommonView
 
-function _setRadio(type, propertiesName) {
-  return SetHash(type, propertiesName, target => {
-    if (!target.channelName) {
-      target.channelName = 'global'
-    }
-  })
-}
-
 export function On(eventName) {
   return SetHash('ractiveEvents', eventName)
 }
@@ -148,14 +144,6 @@ export function Observe(_path) {
 
 export function Events(eventName) {
   return SetHash('events', eventName)
-}
-
-export function RadioEvents(eventName) {
-  return _setRadio('radioEvents', eventName)
-}
-
-export function RadioRequests(eventName) {
-  return _setRadio('radioRequests', eventName)
 }
 
 export function Template(template) {

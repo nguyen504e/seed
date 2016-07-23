@@ -75,6 +75,10 @@ const config = {
         ]
       },
       {
+        test:   /\.rac$/,
+        loader: 'ractive'
+      },
+      {
         test:   /\.scss$/,
         loader: 'css!sass?outputStyle=compact'
       },

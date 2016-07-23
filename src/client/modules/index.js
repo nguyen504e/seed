@@ -2,6 +2,7 @@ import ErrorPage from './error/ErrorPage';
 import auth from './auth';
 
 import app from './app'
+import logout from './logout'
 import { default as CommonLoader, Route } from '../common/CommonLoader';
 import { AppChannel, GlobalChannel } from '../services/radioService';
 
@@ -13,15 +14,6 @@ class ModulesLoader extends CommonLoader {
 
   @Route('/')
   routerRoot() {
-    const meta = document.head.querySelector('meta[base-request]')
-    if (meta) {
-      const baseRequest = atob(meta.getAttribute('base-request'))
-      meta.remove()
-      if (baseRequest) {
-        return this.redirect(baseRequest)
-      }
-    }
-
     return this.redirect('/app')
   }
 
@@ -37,4 +29,4 @@ class ModulesLoader extends CommonLoader {
 
 }
 
-export default [app, auth, ModulesLoader]
+export default [app, auth, logout, ModulesLoader]

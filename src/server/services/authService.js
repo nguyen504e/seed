@@ -15,7 +15,9 @@ const {expiresInMinutes, secrets} = profile
 const validateJwt                 = expressJwt({secret: secrets.session})
 
 class Auth {
-  constructor() {}
+  constructor() {
+    this._checkAuth = compose().use(this._checkTokken).use(this._attachUser)
+  }
 
   /**
    * Create midware to check auth info
@@ -23,7 +25,7 @@ class Auth {
    * @return {Function}       midware
    */
   checkAuth() {
-    return compose().use(this._checkTokken).use(this._attachUser)
+    return this._checkAuth
   }
 
   /**
