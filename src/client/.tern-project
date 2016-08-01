@@ -7,6 +7,7 @@
     "**/*.js"
   ],
   "plugins": {
+    "modules": {},
     "es_modules": {},
     "doc_comment": {
       "fullDocs": true

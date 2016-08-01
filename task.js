@@ -140,7 +140,7 @@ class Task {
       }
 
       if (!isDevMode) {
-        return logger.info('Complete!')
+        return logger.info('Webpack complete!')
       }
     }
   }

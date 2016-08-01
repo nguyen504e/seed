@@ -3,11 +3,8 @@ $fa-font-path: "~font-awesome/fonts";
 @import "./variables";
 @import "./mixins";
 @import "../include";
+
 $btn-social-color: #fff;
-$font-family-sans-serif: 'Roboto Light', sans-serif;
-$font-family-serif: Georgia, "Times New Roman", Times, serif;
-$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
-$font-family-base: $font-family-sans-serif;
 $btn-social-color: #fff;
 $btn-facebook-bg: #4862a3;
 $btn-facebook-border: #4862a3;
@@ -68,31 +65,12 @@ $btn-twitter-border: #55acee;
   align-items: center;
 }
 
-@font-face {
-  font-family: 'Roboto Light';
-  font-style: normal;
-  font-weight: 300;
-  src: url('../../assets/fonts/Roboto/Roboto-Light.woff2');
-}
-@font-face {
-  font-family: 'Roboto Condensed Light';
-  font-style: normal;
-  font-weight: 300;
-  src: url('../../assets/fonts/Roboto_Condensed/RobotoCondensed-Light.woff2');
-}
-@font-face {
-  font-family: 'Roboto Condensed Bold';
-  font-style: normal;
-  font-weight: 300;
-  src: url('../../assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.woff2');
-}
 .text-condensed {
-  font-family: "Roboto Condensed Light", sans-serif;
+  font-family: $font-family-condensed;
 }
 body {
   font-family: $font-family-sans-serif;
 }
-
 .overlay {
   display: none;
   position: fixed;
@@ -103,44 +81,53 @@ body {
   z-index: 1034;
   width: 100vw;
   height: 100vh;
-  &.active{
+  &.active {
     display: initial;
   }
 }
-
 .transition {
   transition: all 0.4s ease 0s;
 }
-
 .display-a-1 {
   @extend .display-1;
-
   @include media-breakpoint-down(lg) {
     font-size: $display2-size;
     font-weight: $display2-weight;
   }
-
   @include media-breakpoint-down(md) {
     font-size: $display3-size - 0.25rem;
     font-weight: $display3-weight;
   }
-
   @include media-breakpoint-down(sm) {
     font-size: $display4-size - 0.5rem;
     font-weight: $display4-weight;
   }
 }
-
 .display-a-4 {
   @extend .display-4;
-
   @include media-breakpoint-down(md) {
     font-size: $display3-size - 0.5rem;
     font-weight: $display3-weight;
   }
-
   @include media-breakpoint-down(sm) {
     font-size: $display4-size - 1rem;
     font-weight: $display4-weight;
   }
+}
+.navbar {
+  .profile-pic {
+    $size: $udf-navbar-content-height;
+    height: $size;
+    width: $size;
+    border: none;
+  }
+}
+.profile-pic {
+  background-size: cover;
+  border-radius: 5%;
+}
+.page-header {
+  padding-bottom: 0.5rem;
+  margin: 0 1rem;
+  border-bottom: 1px solid #eee;
 }

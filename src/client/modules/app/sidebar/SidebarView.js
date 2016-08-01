@@ -1,5 +1,6 @@
 import { AppChannel } from '../../../services/radioService';
 import { default as CommonView, RactiveTemplate, On } from '../../../common/CommonView';
+import { delay } from 'lodash';
 import authService from '../../../services/authService';
 
 import SidebarTemplate from './Sidebar.html'
@@ -18,15 +19,21 @@ class SidebarView extends CommonView {
     onToggleSidebar() {
       const $tmpl      = this.$tmpl
       const shouldShow = !$tmpl.get('isShow')
+
+      this.updateTransition()
+
       $tmpl.set({
         isShow:   shouldShow,
         slideNum: shouldShow ? 0 : $tmpl.el.offsetWidth
       })
     }
 
-    onDomRefresh() {
+    updateTransition() {
       this.$tmpl.set('transition', true)
+      delay(() => this.$tmpl.set('transition', false), 500)
     }
+
+    onDomRefresh() {}
 
     templateContext() {
       const {innerWidth, innerHeight} = window
@@ -37,13 +44,15 @@ class SidebarView extends CommonView {
 
     @On()
     onSlide(e) {
-      this.$tmpl.set('slideNum', e.original.deltaX)
+      if (e.original.deltaX > -1) {
+        this.$tmpl.set('slideNum', e.original.deltaX)
+      }
     }
 
     @On()
     onSlideCancel(e) {
       const $tmpl = this.$tmpl
-
+      this.updateTransition()
       if (Number($tmpl.get('slideNum')) < e.node.offsetWidth / 2) {
         $tmpl.set('slideNum', 0)
       } else {

@@ -3,6 +3,7 @@ import auth from './auth';
 
 import app from './app'
 import logout from './logout'
+import admin from './admin';
 import { default as CommonLoader, Route } from '../common/CommonLoader';
 import { AppChannel, GlobalChannel } from '../services/radioService';
 
@@ -29,4 +30,4 @@ class ModulesLoader extends CommonLoader {
 
 }
 
-export default [app, auth, logout, ModulesLoader]
+export default [app, auth, admin, logout, ModulesLoader]

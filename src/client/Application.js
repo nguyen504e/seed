@@ -1,5 +1,5 @@
 import { Region } from 'backbone.marionette';
-import { forEach, isFunction, mapValues } from 'lodash';
+import { isFunction, mapValues } from 'lodash';
 
 import MessageView from './components/MessageView';
 
@@ -79,7 +79,7 @@ class Application extends CommonApplication {
   }
 
   @RadioRequests('hide:message')
-  onHideMessage(done) {
+  onHideMessage() {
     this.$tmpl.set('message.active', false)
     this.regions.message.reset()
   }
