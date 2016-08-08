@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'Roboto Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../../assets/fonts/Roboto/Roboto-Light.woff2');
+}
+@font-face {
+  font-family: 'Roboto Condensed Light';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../../assets/fonts/Roboto_Condensed/RobotoCondensed-Light.woff2');
+}
+@font-face {
+  font-family: 'Roboto Condensed Bold';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../../assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.woff2');
+}
+$font-family-sans-serif: 'Roboto Light', sans-serif;
+$font-family-serif: Georgia, "Times New Roman", Times, serif;
+$font-family-base: $font-family-sans-serif;
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+$font-family-condensed: "Roboto Condensed Light", sans-serif;
+$udf-mock-up: false;
+@if $udf-mock-up {
+   @font-face{
+    font-family: 'BLOKK';
+    src: url('../../assets/fonts/BLOKK/BLOKKRegular.woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  $font-family-sans-serif: 'BLOKK';
+  $font-family-serif: 'BLOKK';
+  $font-family-base: $font-family-sans-serif;
+  $font-family-monospace: 'BLOKK';
+  $font-family-condensed: 'BLOKK';
+}
