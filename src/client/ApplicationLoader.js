@@ -3,10 +3,33 @@ import page from 'page';
 import config from './config';
 
 import Application from './Application'
-import Modules from './modules'
+// import Modules from './modules'
 import { default as CommonLoader, Children } from './common/CommonLoader'
+import { default as CommonRouter, Route } from './common/CommonRouter'
+import history from './common/CommonHistory'
 
-@Children(Modules)
+import backbone from 'backbone'
+
+class RouterHome extends CommonRouter {
+  @Route('home/*')
+  home() {
+    console.log('home')
+  }
+}
+
+class RouterHouse extends CommonRouter {
+  @Route('home/house')
+  house() {
+    console.log('house')
+  }
+}
+
+new RouterHome()
+new RouterHouse()
+
+history.start()
+
+// @Children(Modules)
 class ApplicationLoader extends CommonLoader {
   constructor() {
     super()
@@ -26,12 +49,12 @@ class ApplicationLoader extends CommonLoader {
   }
 
   start() {
-    return this.load().then(() => {
-      const app = new Application()
-      app.start()
-      page({dispatch: false})
-      page.redirect(window.location.pathname)
-    })
+    // return this.load().then(() => {
+    //   const app = new Application()
+    //   app.start()
+    //   page({dispatch: false})
+    //   page.redirect(window.location.pathname)
+    // })
   }
 }
 

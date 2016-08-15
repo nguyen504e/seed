@@ -15,16 +15,6 @@ const config = {
     chunkFilename: '[name].js'
   },
   entry: {
-    vendor: [
-      'jquery',
-      'underscore',
-      'backbone',
-      'backbone.radio',
-      'backbone.babysitter',
-      'backbone.marionette',
-      'ractive',
-      'page'
-    ],
     index: [
       resolve('src/client/index.js')
     ]
