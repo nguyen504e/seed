@@ -10,10 +10,11 @@ import history from './common/CommonHistory'
 
 import backbone from 'backbone'
 
+import pathToRegx from 'path-to-regexp'
 class RouterHome extends CommonRouter {
   @Route('home/*')
-  home() {
-    console.log('home')
+  home(next) {
+    next()
   }
 }
 

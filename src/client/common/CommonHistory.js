@@ -12,12 +12,8 @@ export class CommonHistory extends History {
 
   // Add a route to be tested when the fragment changes. Routes added later
   // may override previous routes.
-  route(_route, _callback, _fragment) {
-    this.handlers.push({
-      route:    _route,
-      callback: _callback,
-      fragment: _fragment
-    })
+  route(route, callback, fragment) {
+    return this.handlers.push({route, callback, fragment})
   }
 
   // Attempt to load the current URL fragment. If a route succeeds with a
@@ -33,14 +29,12 @@ export class CommonHistory extends History {
 
     for (i = i || 0; i < length; i++) {
       const handler = this.handlers[i]
-      if (handler.route.test(fragment)) {
-        this._nextRouteIndex = i
-        return handler.callback(fragment, this._goNextRoute)
+      if (!handler.route.test(fragment)) {
+        const _next = (this._nextRouteIndex = i + 1) < length ? this._goNextRoute : null
+        return handler.callback(fragment, _next)
       }
     }
   }
-
-  _goNextRoute() {}
 }
 
 export default new CommonHistory();
